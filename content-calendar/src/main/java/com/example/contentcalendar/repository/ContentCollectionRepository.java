@@ -16,23 +16,33 @@ import jakarta.annotation.PostConstruct;
 @Repository
 public class ContentCollectionRepository {
 
-  private final List<Content> content = new ArrayList<>();
+  private final List<Content> contentList = new ArrayList<>();
 
   public ContentCollectionRepository() {
 
   }
 
   public List<Content> findAll() {
-    return content;
+    return contentList;
   }
 
   public Optional<Content> findById(Integer id) {
-    return content.stream().filter(c -> c.id().equals(id)).findFirst();
+    return contentList.stream().filter(c -> c.id().equals(id)).findFirst();
+  }
+
+  public void save(Content content) {
+    contentList.removeIf(c -> c.id().equals(content.id())); // so the update function works; this is just a temporary
+                                                            // in-memory repository anyway
+    contentList.add(content);
+  }
+
+  public Boolean existsById(Integer id) {
+    return contentList.stream().filter(c -> c.id().equals(id)).count() == 1;
   }
 
   @PostConstruct
   private void init() {
-    Content c = new Content(
+    Content content = new Content(
         1,
         "My First Blog Post",
         "My first post",
@@ -42,6 +52,6 @@ public class ContentCollectionRepository {
         null,
         "");
 
-    content.add(c);
+    contentList.add(content);
   }
 }
