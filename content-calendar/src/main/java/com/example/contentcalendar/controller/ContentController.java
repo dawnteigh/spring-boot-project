@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 
 import com.example.contentcalendar.model.Content;
-import com.example.contentcalendar.repository.ContentCollectionRepository;
+import com.example.contentcalendar.repository.ContentRepository;
 
 import jakarta.validation.Valid;
 
@@ -26,10 +26,10 @@ import org.springframework.web.bind.annotation.PutMapping;
 @CrossOrigin
 public class ContentController {
 
-  private final ContentCollectionRepository repository;
+  private final ContentRepository repository;
 
-  public ContentController(ContentCollectionRepository contentCollectionRepository) {
-    this.repository = contentCollectionRepository;
+  public ContentController(ContentRepository repository) {
+    this.repository = repository;
   }
 
   @GetMapping("")
